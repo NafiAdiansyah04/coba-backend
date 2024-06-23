@@ -14,7 +14,7 @@ const ArticleRoutes = [
   // Article
   {
     method: 'POST',
-    path: '/api/articles',
+    path: '/articles',
     handler: insertNewArticle,
     options: {
       validate: {
@@ -31,17 +31,17 @@ const ArticleRoutes = [
   },
   {
     method: 'GET',
-    path: '/api/articles',
+    path: '/articles',
     handler: getAllArticles,
   },
   {
     method: 'GET',
-    path: '/api/articles/{articleId}',
+    path: '/articles/{articleId}',
     handler: getDetailArticleById,
   },
   {
     method: 'PUT',
-    path: '/api/articles/{articleId}',
+    path: '/articles/{articleId}',
     handler: updateArticleById,
     options: {
       validate: {
@@ -58,14 +58,14 @@ const ArticleRoutes = [
   },
   {
     method: 'DELETE',
-    path: '/api/articles/{articleId}',
+    path: '/articles/{articleId}',
     handler: removeArticleById,
   },
   
   // Review Article
   {
     method: 'POST',
-    path: '/api/review-articles',
+    path: '/review-articles',
     handler: insertArticleReview,
     options: {
       validate: {
@@ -81,7 +81,7 @@ const ArticleRoutes = [
   // Find Categories Articles
   {
     method: 'GET',
-    path: '/api/articles/find',
+    path: '/articles/find',
     handler: getCategoriesArticle,
   },
 ];
