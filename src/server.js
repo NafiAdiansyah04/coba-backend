@@ -52,5 +52,5 @@ module.exports = async (req, res) => {
   const server = await createServer();
   await server.start();
   console.log(`Server running at ${server.info.uri}`);
-  res.status(200).send('Server is running');
+  res.status(200).json({ message: 'Server is running' });
 };
