@@ -2,7 +2,9 @@ const Hapi = require('@hapi/hapi');
 const mongoose = require('mongoose');
 const ArticleRoutes = require('./routes/articleRoutes');
 const EventRoutes = require('./routes/eventRoutes');
- 
+
+mongoose.set('strictQuery', true); // Atur strictQuery sesuai peringatan
+
 const init = async () => {
   const server = Hapi.server({
     port: 3030,
@@ -14,9 +16,24 @@ const init = async () => {
     },
   });
 
-  mongoose.connect('mongodb+srv://nafiadiansyah04:B5uOqsm9K8isxesc@cluster0.1h0rj5s.mongodb.net/?retryWrites=true&w=majority', { 
-    useNewUrlParser: true,
+  // Tambahkan rute untuk root
+  server.route({
+    method: 'GET',
+    path: '/',
+    handler: (request, h) => {
+      return 'Hello, world!';
+    },
   });
+
+  try {
+    await mongoose.connect('mongodb+srv://nafiadiansyah04:B5uOqsm9K8isxesc@cluster0.1h0rj5s.mongodb.net/?retryWrites=true&w=majority', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('Connected to MongoDB');
+  } catch (err) {
+    console.error('Error connecting to MongoDB', err);
+  }
 
   const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error'));
