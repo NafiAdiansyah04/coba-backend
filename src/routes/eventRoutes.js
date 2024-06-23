@@ -13,7 +13,7 @@ const EventRoutes = [
   // Event
   {
     method: 'POST',
-    path: '/api/events',
+    path: '/events',
     handler: insertNewEvent,
     options: {
       validate: {
@@ -32,17 +32,17 @@ const EventRoutes = [
   },
   {
     method: 'GET',
-    path: '/api/events',
+    path: '/events',
     handler: getAllEvents,
   },
   {
     method: 'GET',
-    path: '/api/events/{eventId}',
+    path: '/events/{eventId}',
     handler: getDetailEventById,
   },
   {
     method: 'PUT',
-    path: '/api/events/{eventId}',
+    path: '/events/{eventId}',
     handler: updateEventById,
     options: {
       validate: {
@@ -61,14 +61,14 @@ const EventRoutes = [
   },
   {
     method: 'DELETE',
-    path: '/api/events/{eventId}',
+    path: '/events/{eventId}',
     handler: removeEventById,
   },
   
   // Review Event
   {
     method: 'POST',
-    path: '/api/review-events',
+    path: '/review-events',
     handler: insertEventReview,
     options: {
       validate: {
@@ -84,7 +84,7 @@ const EventRoutes = [
   // Find Categories Events
   {
     method: 'GET',
-    path: '/api/events/find',
+    path: '/events/find',
     handler: getCategoriesEvent,
   },
 ];
