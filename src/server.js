@@ -7,7 +7,7 @@ mongoose.set('strictQuery', true); // Atur strictQuery sesuai peringatan
 
 const init = async () => {
   const server = Hapi.server({
-    port: 3030,
+    port: process.env.PORT || 3030,
     host: '0.0.0.0',
     routes: {
       cors: {
@@ -26,6 +26,7 @@ const init = async () => {
   });
 
   try {
+    console.log('Connecting to MongoDB...');
     await mongoose.connect('mongodb+srv://nafiadiansyah04:B5uOqsm9K8isxesc@cluster0.1h0rj5s.mongodb.net/?retryWrites=true&w=majority', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -36,16 +37,17 @@ const init = async () => {
   }
 
   const db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error'));
-    db.once('open', () => {
-      console.log('Connection with database succeeded.');
+  db.on('error', console.error.bind(console, 'connection error'));
+  db.once('open', () => {
+    console.log('Connection with database succeeded.');
   });
 
   server.route(ArticleRoutes);
   server.route(EventRoutes);
- 
+
   await server.start();
-  console.log(`Server running in ${server.info.uri}`);
+  console.log(`Server running at ${server.info.uri}`);
+  return server;
 };
- 
-init();
+
+module.exports = init; // Ubah ini untuk mengekspor fungsi init
