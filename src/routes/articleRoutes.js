@@ -32,7 +32,9 @@ const ArticleRoutes = [
   {
     method: 'GET',
     path: '/articles',
-    handler: getAllArticles,
+    handler: (request, h) => {
+      return { articles: [] }; 
+    },
   },
   {
     method: 'GET',
