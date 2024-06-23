@@ -30,6 +30,7 @@ const createServer = async () => {
     await mongoose.connect('mongodb+srv://nafiadiansyah24:u2aAozO8SfvBOhKF@clusterww.0msopsa.mongodb.net/?retryWrites=true&w=majority&appName=clusterWW', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
     });
     console.log('Connected to MongoDB');
   } catch (err) {
