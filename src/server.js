@@ -14,7 +14,7 @@ const init = async () => {
     },
   });
 
-  mongoose.connect('mongodb+srv://nafiadiansyah04:B5uOqsm9K8isxesc@cluster0.1h0rj5s.mongodb.net/?retryWrites=true&w=majority', { 
+  mongoose.connect('mongodb+srv://nafiadiansyah24:6dOemfKxwgtirMbs@cluster1.3rmyszq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1', { 
     useNewUrlParser: true,
   });
 
