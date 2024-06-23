@@ -5,7 +5,7 @@ const EventRoutes = require('./routes/eventRoutes');
 
 mongoose.set('strictQuery', true); // Atur strictQuery sesuai peringatan
 
-const init = async () => {
+const createServer = async () => {
   const server = Hapi.server({
     port: process.env.PORT || 3030,
     host: '0.0.0.0',
@@ -45,9 +45,12 @@ const init = async () => {
   server.route(ArticleRoutes);
   server.route(EventRoutes);
 
-  await server.start();
-  console.log(`Server running at ${server.info.uri}`);
   return server;
 };
 
-module.exports = init; // Ubah ini untuk mengekspor fungsi init
+module.exports = async (req, res) => {
+  const server = await createServer();
+  await server.start();
+  console.log(`Server running at ${server.info.uri}`);
+  res.status(200).send('Server is running');
+};
