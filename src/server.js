@@ -3,10 +3,12 @@ const mongoose = require('mongoose');
 const ArticleRoutes = require('./routes/articleRoutes');
 const EventRoutes = require('./routes/eventRoutes');
 
-const init = async () => {
+mongoose.set('strictQuery', true); // Atur strictQuery sesuai peringatan
+
+const createServer = async () => {
   const server = Hapi.server({
-    port: 3030,
-    host: 'localhost',
+    port: process.env.PORT || 3030,
+    host: '0.0.0.0',
     routes: {
       cors: {
         origin: ['*'],
@@ -14,21 +16,41 @@ const init = async () => {
     },
   });
 
-  mongoose.connect('mongodb+srv://nafiadiansyah24:6dOemfKxwgtirMbs@cluster1.3rmyszq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1', { 
-    useNewUrlParser: true,
+  // Tambahkan rute untuk root
+  server.route({
+    method: 'GET',
+    path: '/',
+    handler: (request, h) => {
+      return 'Hello, world!';
+    },
   });
+
+  try {
+    console.log('Connecting to MongoDB...');
+    await mongoose.connect('mongodb+srv://nafiadiansyah04:B5uOqsm9K8isxesc@cluster0.1h0rj5s.mongodb.net/?retryWrites=true&w=majority', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('Connected to MongoDB');
+  } catch (err) {
+    console.error('Error connecting to MongoDB', err);
+  }
 
   const db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error'));
-    db.once('open', () => {
-      console.log('Connection with database succeeded.');
+  db.on('error', console.error.bind(console, 'connection error'));
+  db.once('open', () => {
+    console.log('Connection with database succeeded.');
   });
 
-  server.route(ArticleRoutes);
-  server.route(EventRoutes);
+  server.route(ArticleRoutes); // Pastikan rute artikel ditambahkan
+  server.route(EventRoutes);   // Pastikan rute event ditambahkan
 
-  await server.start();
-  console.log(`Server running in ${server.info.uri}`);
+  return server;
 };
 
-init();
+module.exports = async (req, res) => {
+  const server = await createServer();
+  await server.start();
+  console.log(`Server running at ${server.info.uri}`);
+  res.status(200).json({ message: 'Server is running' }); // Ubah respons menjadi JSON
+};
