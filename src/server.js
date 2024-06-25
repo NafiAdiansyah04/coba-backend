@@ -7,7 +7,7 @@ mongoose.set('strictQuery', true); // Atur strictQuery sesuai peringatan
 
 const createServer = async () => {
   const server = Hapi.server({
-    port: process.env.PORT || 3030,
+    port: process.env.PORT || 3001,
     host: '0.0.0.0',
     routes: {
       cors: {
